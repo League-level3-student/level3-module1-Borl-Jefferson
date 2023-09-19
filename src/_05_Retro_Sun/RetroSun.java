@@ -24,13 +24,13 @@ public class RetroSun extends PApplet {
     @Override
     public void settings() {
         // 1. Set the size of your sketch to at least 800 width, 600 height
-        
+        size(800, 600);
     }
 
     @Override
     public void setup() {
         // 2. Set bgColor as the background color
-        
+        background(bgColor);
     }
 
     @Override
@@ -38,7 +38,9 @@ public class RetroSun extends PApplet {
         /*
          * PART 1: Drawing the sun
          */
-
+    	fill(sunColors[0]);
+    	noStroke();
+ellipse(400, 300, 500, 500);
         // Draw an ellipse for the sun in the center of the window
         // Use fill(sunColors[0]) to make it yellow
         // Use noStroke() to remove the black outline
@@ -56,10 +58,21 @@ public class RetroSun extends PApplet {
         // Call the loadPixels() method to put all the pixel colors into
         // the pixels[] array
         // https://processing.org/reference/loadPixels_.html
+loadPixels();
 
-        // We want to change the color of our sun so use an if statement
+        // We want to change the color of our sun so(to?) use an if statement
         // to check if the pixel is the color of the yellow circle.
-
+System.out.println(pixels.length);
+for (int i = 0; i < pixels.length; i++) {
+if(pixels[i]==sunColors[0]) {
+	
+	int y = i/width;
+	float step = map(y, 50, 550, 0, 1);
+	pixels[i] = interpolateColor(sunColors, step);
+	
+}
+}
+updatePixels();
         // If pixel[i] is the same color as the color of our circle (sunColors[0]),
         // we need to map the pixel to a color in our sunColors[] array
         // (see 2nd gradient image in RetroSun.html)
@@ -91,6 +104,13 @@ public class RetroSun extends PApplet {
          */
 
         // Set the fill color to the background color
+fill(bgColor);
+
+float y = width/2;
+float h = 50;
+float x = 400 - 250;
+float w = 2*250;
+rect(x, y, w, h);
 
         // To draw each rectangle we need to find its x, y, width, height
         // *The y position can be any value within the sun:
