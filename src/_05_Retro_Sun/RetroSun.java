@@ -1,5 +1,7 @@
 package _05_Retro_Sun;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 /*
@@ -11,7 +13,14 @@ import processing.core.PApplet;
 public class RetroSun extends PApplet {
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
-
+//float y = width/2;
+    float y = 550;
+  
+    float h = 50;
+    float counter=0;
+   ArrayList<Rectangle> rec = new ArrayList<Rectangle>();
+   
+    
     // RGB colors
     int[] sunColors = {
             color(212, 202, 11), color(214, 198, 30), color(211, 170, 26),
@@ -31,6 +40,13 @@ public class RetroSun extends PApplet {
     public void setup() {
         // 2. Set bgColor as the background color
         background(bgColor);
+        rec.add(new Rectangle(150, 550, 500, 50));
+    rec.add(new Rectangle(150, 600, 500, 50));
+    rec.add(new Rectangle(150, 650, 500, 50));
+    rec.add(new Rectangle(150, 700, 500, 50));
+    rec.add(new Rectangle(150, 750, 500, 50));
+    rec.add(new Rectangle(150, 800, 500, 50));
+
     }
 
     @Override
@@ -62,7 +78,7 @@ loadPixels();
 
         // We want to change the color of our sun so(to?) use an if statement
         // to check if the pixel is the color of the yellow circle.
-System.out.println(pixels.length);
+
 for (int i = 0; i < pixels.length; i++) {
 if(pixels[i]==sunColors[0]) {
 	
@@ -106,11 +122,8 @@ updatePixels();
         // Set the fill color to the background color
 fill(bgColor);
 
-float y = width/2;
-float h = 50;
-float x = 400 - 250;
-float w = 2*250;
-rect(x, y, w, h);
+
+
 
         // To draw each rectangle we need to find its x, y, width, height
         // *The y position can be any value within the sun:
@@ -131,6 +144,7 @@ rect(x, y, w, h);
          * To move a section upwards each rectangle's y value needs to decrease. To make
          * the section get smaller, its height needs to also decrease.
          */
+
 
         // Decrease the y variable of the rectangular section created in PART 3.
         // If there isn't a variable, declare a float variable OUTSIDE of the
@@ -155,7 +169,33 @@ rect(x, y, w, h);
         // The map() function will make the value of h = 1 if y is at the top,
         // and h = 40 if y is at the bottom.
 
-        
+
+//float x = 400 - 250;
+//float w = 2*250;
+
+//y-=.25;
+//h-=.05;
+//if(y==300) {
+	//y=550;
+	//h=50;
+//}
+for (int i = 0; i < rec.size(); i++) {
+	rec.get(i).y-=.25;
+	rec.get(i).h-=.05;
+	if(rec.get(i).y==550) {
+		rec.get(i).h=50;
+	}
+	
+	if(rec.get(i).y==300) {
+		rec.get(i).y=550;
+		rec.get(i).h=50;
+	}
+	rec.get(i).draw();
+	System.out.println(rec.get(i).x + " " + rec.get(i).y + " " +  rec.get(i).w + " " +  rec.get(i).h);
+}
+
+
+
         /*
          * PART 5: Managing the missing sun sections
          *
@@ -167,7 +207,14 @@ rect(x, y, w, h);
         // HINT: You can use the Rectangle class defined below to create
         // a list of Rectangles.
 
-        
+	
+	//float y =.25;
+	//float h =.05;
+//x,y,w,h
+//150, 550, 500, 50
+System.out.println(rec.size());
+
+
         /*
          * PART 6: Adding extras
          *
@@ -205,12 +252,22 @@ rect(x, y, w, h);
     // ArrayList<Rectangle> sections = new ArrayList<Rectangle>();
     class Rectangle {
         float x, y, w, h;
-
+        
+ public void draw(){
+        	  rect(x, y, w, h); 
+           }
+ 
         Rectangle(float x, float y, float w, float h) {
             this.x = x;
             this.y = y;
             this.w = w;
             this.h = h;
+         
         }
+        
     }
+    
+    
+    
 }
+    
