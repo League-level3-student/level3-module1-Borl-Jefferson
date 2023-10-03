@@ -1,5 +1,7 @@
 package _07_Meeting_Scheduler;
 
+import java.util.ArrayList;
+
 public class MeetingScheduler {
     /*
      * Your task is to code a method to find a meeting time for two people
@@ -22,6 +24,35 @@ public class MeetingScheduler {
      * Assume both schedules are in the same time zones
      */
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
+    	//al1: 6, 4, 3
+    	//al2: 2, 6, 5
+    	String day = "Monday";
+    	String mo = "Monday";
+    	String tu = "Tuesday";
+    	String we = "Wednesday";
+    	String th = "Thursday";
+    	String fr = "Friday";
+    	
+    	
+    	Schedule fin = new Schedule();
+        ArrayList<Integer> monday = new ArrayList<Integer>();
+    	for (int k = 1; k < 6; k++) {
+			System.out.println(k);
+		if(k==1) {day=mo;}
+		if(k==2) {day=tu;}
+		if(k==3) {day=we;}
+		if(k==4) {day=th;}
+		if(k==5) {day=fr;}
+			
+    	for (int i = 0; i < person1.getSchedule().get(day).size(); i++) {
+    		for (int j = 0; j < person2.getSchedule().get(day).size(); j++) {
+
+    		if(person1.getSchedule().get(day).get(i) == person2.getSchedule().get(day).get(j)) {
+    			fin.addAvailability(day, j);
+    		}
+		}
+    }
+    	}
         
         return null;
     }
