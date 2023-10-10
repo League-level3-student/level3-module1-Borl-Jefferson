@@ -1,6 +1,18 @@
 package _08_California_Weather;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 /*
  * OBJECTIVE:
@@ -27,13 +39,51 @@ import java.util.HashMap;
  * temperature, you can get a free API key at: https://openweathermap.org/api
  */
 
-public class CaliforniaWeather {
-    
-    void start() {
+public class CaliforniaWeather implements ActionListener {
+        JFrame frame = new JFrame();
+        JPanel panel = new JPanel();
+        JTextField text = new JTextField();
+        JButton jb1 = new JButton();
+        JButton jb2 = new JButton();
+        JButton jb3 = new JButton();
+        Utilities utili = new Utilities();
+        String min;
+        String max;
+       int counter3=0;
+       int counter1=0;
+       int counter2=0;
         HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+    void start() {
         
+    
+        
+        panel.add(text);
+        panel.add(jb1);
+        panel.add(jb2);
+        panel.add(jb3);
+        frame.add(panel);
+        frame.pack();
+        
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(460, 320);
+       jb1.setText("Search by name");
+       
+      text.setPreferredSize(new Dimension(115, 35));
+        jb1.addActionListener(this);
+        jb2.addActionListener(this);
+        jb3.addActionListener(this);
         // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
+     
+        
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == this.jb1) {
+			if(counter1==1) {
+			   String cityName = Utilities.capitalizeWords( text.getText() );
         WeatherData datum = weatherData.get(cityName);
         
         if( datum == null ) {
@@ -41,5 +91,46 @@ public class CaliforniaWeather {
         } else {
             System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
         }
-    }
+			counter1=0;
+			}
+        if(counter1==0) {
+        	text.setText("Enter city name");
+        	counter1++;
+        }
+			}
+		
+		
+		if(e.getSource() == this.jb2) {
+			String clist = "";
+			 String cityName = Utilities.capitalizeWords( text.getText() );
+			 WeatherData datum = weatherData.get(cityName);
+			 if( datum == null ) {
+		            System.out.println("Unable to find weather data for: " + cityName);
+		        } else {
+		        	for(int i = 0; i<weatherData.size(); i++) {
+		        		//do stuff to get clist to be the list of city names
+		            }
+		            System.out.println("Cities with " + cityName + " weather: " + clist);
+		        }
+		}
+		
+		if(e.getSource() == this.jb3) {
+			if(counter3 ==2) {
+				max=text.getText();
+				//do stuff to get city name
+				counter3=0;
+			}
+			if(counter3 == 1) {
+			min = text.getText();
+			text.setText("Maximum temp");
+			counter3++;
+			}
+			if(counter3==0) {
+			text.setText("Minumum temp");
+			counter3++;
+		}
+			
+		}
+		
+	}
 }

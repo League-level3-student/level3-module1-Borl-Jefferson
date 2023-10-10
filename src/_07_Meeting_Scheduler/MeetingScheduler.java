@@ -37,23 +37,24 @@ public class MeetingScheduler {
     	Schedule fin = new Schedule();
         ArrayList<Integer> monday = new ArrayList<Integer>();
     	for (int k = 1; k < 6; k++) {
-			System.out.println(k);
+
 		if(k==1) {day=mo;}
 		if(k==2) {day=tu;}
 		if(k==3) {day=we;}
 		if(k==4) {day=th;}
 		if(k==5) {day=fr;}
-			
+
     	for (int i = 0; i < person1.getSchedule().get(day).size(); i++) {
     		for (int j = 0; j < person2.getSchedule().get(day).size(); j++) {
 
     		if(person1.getSchedule().get(day).get(i) == person2.getSchedule().get(day).get(j)) {
-    			fin.addAvailability(day, j);
+    			fin.addAvailability(day, person2.getSchedule().get(day).get(j));
     		}
+
 		}
     }
     	}
         
-        return null;
+        return fin;
     }
 }
