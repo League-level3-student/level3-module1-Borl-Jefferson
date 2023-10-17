@@ -66,9 +66,10 @@ public class CaliforniaWeather implements ActionListener {
         
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(460, 320);
+        frame.setSize(640, 240);
        jb1.setText("Search by name");
-       
+       jb2.setText("Search by weather");
+       jb3.setText("Search by temperature (F)");
       text.setPreferredSize(new Dimension(115, 35));
         jb1.addActionListener(this);
         jb2.addActionListener(this);
@@ -99,25 +100,53 @@ public class CaliforniaWeather implements ActionListener {
         }
 			}
 		
-		
+	/*
+	 * Cities with City Weather weather: 
+Clear
+Cities with City Weather weather: 
+Overcast
+Cities with City Weather weather: 
+Overcast
+Cities with City Weather weather: 
+Clear
+Cities with City Weather weather: 
+Mostly Cloudy	
+	 */
 		if(e.getSource() == this.jb2) {
+			if(counter2 == 1) {
 			String clist = "";
 			 String cityName = Utilities.capitalizeWords( text.getText() );
 			 WeatherData datum = weatherData.get(cityName);
-			 if( datum == null ) {
-		            System.out.println("Unable to find weather data for: " + cityName);
-		        } else {
-		        	for(int i = 0; i<weatherData.size(); i++) {
-		        		//do stuff to get clist to be the list of city names
-		            }
-		            System.out.println("Cities with " + cityName + " weather: " + clist);
-		        }
+			
+		System.out.println("Cities with " + cityName + " weather:");
+		        	for(String citynames : weatherData.keySet()) {
+		        		if(weatherData.get(citynames).weatherSummary.equals(cityName)){
+System.out.println(citynames);
+		        	}
+		        	}
+		 
+		        
+			 counter2=0;
+			}
+			if(counter2 ==0) {
+				text.setText("City Weather");
+				counter2++;
+			}
 		}
 		
 		if(e.getSource() == this.jb3) {
 			if(counter3 ==2) {
 				max=text.getText();
-				//do stuff to get city name
+				Double maxd=Double.parseDouble(max);
+				Double mind=Double.parseDouble(min);
+				System.out.println("Cities with temperatures between " + mind + " and " + maxd);
+				for(String temps : weatherData.keySet()) {
+					if(weatherData.get(temps).temperatureF < maxd && weatherData.get(temps).temperatureF > mind) {
+					System.out.println(temps);
+					}
+					}
+					
+				
 				counter3=0;
 			}
 			if(counter3 == 1) {

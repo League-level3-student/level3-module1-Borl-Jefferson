@@ -7,9 +7,11 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 /*
  * You task is to create a java program that:
@@ -35,6 +37,7 @@ import javax.swing.Timer;
  */
 
 public class WorldClocks implements ActionListener {
+	
     ClockUtilities clockUtil;
     Timer timer;
     TimeZone timeZone;
@@ -47,20 +50,23 @@ public class WorldClocks implements ActionListener {
     String dateStr;
     String timeStr;
     
+    int counter=0;
     public WorldClocks() {
         clockUtil = new ClockUtilities();
-
+	for (int i = 0; i < 100; i++) {
         // The format for the city must be: city, country (all caps)
-        city = "Chicago, US";
+        city = JOptionPane.showInputDialog("Enter a city name \n The format for the city must be: city, country (all caps)");
         timeZone = clockUtil.getTimeZoneFromCityName(city);
-        
+        String month = "";
+        String dayOfWeek = "";
+        String timeStr = "";
         Calendar calendar = Calendar.getInstance(timeZone);
-        String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-        String dayOfWeek = calendar.getDisplayName( Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-        dateStr = dayOfWeek + " " + month + " " + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.YEAR);
+         month += "\n"+calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+         dayOfWeek += "\n"+calendar.getDisplayName( Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        dateStr += dayOfWeek + " " + month + " " + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.YEAR);
         
         System.out.println(dateStr);
-
+if(counter==0) {
         // Sample starter program
         frame = new JFrame();
         panel = new JPanel();
@@ -76,14 +82,16 @@ public class WorldClocks implements ActionListener {
         // 1000 milliseconds
         timer = new Timer(1000, this);
         timer.start();
+        counter++;
+}
     }
-
+	}
     @Override
     public void actionPerformed(ActionEvent arg0) {
         Calendar c = Calendar.getInstance(timeZone);
         String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
         String twelveHourTime = " [" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND) + "]";
-        timeStr = militaryTime + twelveHourTime;
+        timeStr =city + ": " + militaryTime + twelveHourTime;
         
         System.out.println(timeStr);
         textArea.setText(city + "\n" + dateStr + "\n" + timeStr);
